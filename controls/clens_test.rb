@@ -14,14 +14,16 @@ control 'core-plans-clens' do
   '
   clens_pkg_ident = command("#{hab_path} pkg path #{plan_ident}")
   describe clens_pkg_ident do
-    its('exit_status') { should eq 0 }
     its('stdout') { should_not be_empty }
+    its('stderr') { should be_empty }
+    its('exit_status') { should eq 0 }
   end
   clens_pkg_ident = clens_pkg_ident.stdout.strip
 
   describe command("ls -al #{clens_pkg_ident}/lib/libclens.a") do
     its('stdout') { should_not be_empty }
     its('stdout') { should match /#{clens_pkg_ident}/}
+    its('stderr') { should be_empty }
     its('exit_status') { should eq 0 }
   end
 end
